@@ -33,6 +33,9 @@ const main = async () => {
   commands['!socials'] = ({ tags }) =>
     `@${tags.username}: 🐙 https://github.com/ryannhg 🐤 https://twitter.com/rhg_dev`
 
+  commands['!claw'] = ({ tags }) =>
+    `@${tags.username}: Check out THE CLAW!! https://www.twitch.tv/team/theclaw`
+
   commands['!so'] = ({ tags, message }) => {
     if (tags.username === streamer) {
       let [_, rawUsername] = message.split(' ')
