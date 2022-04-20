@@ -1,0 +1,30 @@
+{
+  "name": "roborhg",
+  "version": "1.0.0",
+  "description": "the friendly bot for ryan_the_rhg's stream",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "npm install && npm run dev",
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryannhg/roborhg.git"
+  },
+  "keywords": [
+    "twitch",
+    "bot"
+  ],
+  "author": "Ryan Haskell-Glatz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryannhg/roborhg/issues"
+  },
+  "homepage": "https://github.com/ryannhg/roborhg#readme",
+  "dependencies": {
+    "tmi.js": "1.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.15"
+  }
+}
