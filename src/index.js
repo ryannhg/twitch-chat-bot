@@ -33,6 +33,15 @@ const main = async () => {
   commands['!socials'] = ({ tags }) =>
     `@${tags.username}: 🐙 https://github.com/ryannhg 🐤 https://twitter.com/rhg_dev`
 
+  commands['!uno'] = ({ tags }) =>
+    `@${tags.username}: Play our Uno game here: https://uno.rhg.dev`
+
+  commands['!source'] = ({ tags }) =>
+    `@${tags.username}: Here's the latest source code: https://github.com/ryannhg/elm-uno`
+
+  commands['!demo'] = ({ tags }) =>
+    `@${tags.username}: Play our Uno game here: https://uno.rhg.dev`
+
   commands['!claw'] = ({ tags }) =>
     `@${tags.username}: Check out THE CLAW!! https://www.twitch.tv/team/theclaw`
 
