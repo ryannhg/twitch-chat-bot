@@ -36,11 +36,14 @@ const main = async () => {
   commands['!uno'] = ({ tags }) =>
     `@${tags.username}: Play our Uno game here: https://uno.rhg.dev`
 
+  commands['!storybook'] = ({ tags }) =>
+    `@${tags.username}: View our Storybook here: https://elm-storybook.rhg.dev`
+
   commands['!source'] = ({ tags }) =>
-    `@${tags.username}: Here's the latest source code: https://github.com/ryannhg/elm-uno`
+    `@${tags.username}: Here's the source code: https://github.com/ryannhg/elm-storybook/tree/evergreen`
 
   commands['!demo'] = ({ tags }) =>
-    `@${tags.username}: Play our Uno game here: https://uno.rhg.dev`
+    `@${tags.username}: View our Storybook here: https://elm-storybook.rhg.dev`
 
   commands['!claw'] = ({ tags }) =>
     `@${tags.username}: Check out THE CLAW!! https://www.twitch.tv/team/theclaw`
