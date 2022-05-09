@@ -23,6 +23,9 @@ const main = async () => {
 
   client.connect().catch(console.error)
 
+  let adminOnlyCommands = ['!so']
+  let notIncludedIn = (commandsToFind) => (command) =>
+    !(commandsToFind.includes(command))
 
   // 3️⃣ Map a chat command to a JS function!
   let commands = {}
@@ -51,7 +54,7 @@ const main = async () => {
   commands['!storybook'] = ({ tags }) =>
     `@${tags.username}: View our Storybook here: https://evergreen-elm-storybook.netlify.app`
 
-  commands['!claw'] = ({ tags }) =>
+  commands['!theclaw'] = ({ tags }) =>
     `@${tags.username}: Check out THE CLAW!! https://www.twitch.tv/team/theclaw`
 
   commands['!so'] = ({ tags, message }) => {
@@ -70,8 +73,9 @@ const main = async () => {
   }
 
   commands['!help'] = ({ tags }) =>
-    `@${tags.username}: here are all the chat commands: ${Object.keys(commands).join(', ')}`
+    `@${tags.username}: here are all the chat commands: ${Object.keys(commands).filter(notIncludedIn(adminOnlyCommands)).join(', ')}`
 
+  commands['!commands'] = commands['!help']
 
   // 4️⃣ Listen for all Twitch messages
   client.on('message', (channel, tags, message, self) => {
