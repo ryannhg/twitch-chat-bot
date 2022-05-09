@@ -27,6 +27,15 @@ const main = async () => {
   // 3️⃣ Map a chat command to a JS function!
   let commands = {}
 
+  commands['!source'] = ({ tags }) =>
+    `@${tags.username}: Here's the source code: https://github.com/elm-land/elm-land`
+
+  commands['!demo'] = ({ tags }) =>
+    `@${tags.username}: Here's what we're working on: https://elm.land`
+
+  commands['!elmland'] = ({ tags }) =>
+    `@${tags.username}: Here's what we're working on: https://elm.land`
+
   commands['!elm'] = ({ tags }) =>
     `@${tags.username}: Elm is a friendly language that compiles to HTML/CSS/JS, learn more here: https://elm-lang.org`
 
@@ -36,14 +45,11 @@ const main = async () => {
   commands['!uno'] = ({ tags }) =>
     `@${tags.username}: Play our Uno game here: https://uno.rhg.dev`
 
+  commands['!shidi'] = ({ tags }) =>
+    `@${tags.username}: Create some jams here: https://shidi.netlify.app`
+
   commands['!storybook'] = ({ tags }) =>
-    `@${tags.username}: View our Storybook here: https://elm-storybook.rhg.dev`
-
-  commands['!source'] = ({ tags }) =>
-    `@${tags.username}: Here's the source code: https://github.com/ryannhg/elm-storybook/tree/evergreen`
-
-  commands['!demo'] = ({ tags }) =>
-    `@${tags.username}: View our Storybook here: https://elm-storybook.rhg.dev`
+    `@${tags.username}: View our Storybook here: https://evergreen-elm-storybook.netlify.app`
 
   commands['!claw'] = ({ tags }) =>
     `@${tags.username}: Check out THE CLAW!! https://www.twitch.tv/team/theclaw`
