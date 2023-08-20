@@ -1,5 +1,4 @@
 const tmi = require('tmi.js')
-const streamer = 'ryan_the_rhg'
 
 const main = async () => {
   // 1️⃣ Check for environment variable before running
@@ -8,6 +7,9 @@ const main = async () => {
   }
 
   // 2️⃣ Connect to Twitch Chat
+  const streamerUsername = 'ryan_the_rhg'
+  const robotUsername = 'roborhg'
+
   const client = new tmi.Client({
     options: { debug: true },
     connection: {
@@ -15,65 +17,87 @@ const main = async () => {
       reconnect: true
     },
     identity: {
-      username: 'roborhg',
+      username: robotUsername,
       password: process.env.TWITCH_BOT_OAUTH_TOKEN
     },
-    channels: [streamer]
+    channels: [streamerUsername]
   })
 
   client.connect().catch(console.error)
-
-  let adminOnlyCommands = ['!so']
-  let notIncludedIn = (commandsToFind) => (command) =>
-    !(commandsToFind.includes(command))
 
   // 3️⃣ Map a chat command to a JS function!
   let commands = {}
 
   commands['!source'] = ({ tags }) =>
-    `@${tags.username}: Here's the source code: https://github.com/elm-land/elm-land`
+    `@${tags.username} 🧑‍💻 https://github.com/elm-land/movies`
 
-  commands['!demo'] = ({ tags }) =>
-    `@${tags.username}: Here's what we're working on: https://elm.land`
-
-  commands['!elmland'] = ({ tags }) =>
-    `@${tags.username}: Here's what we're working on: https://elm.land`
+  commands['!movies'] = ({ tags }) =>
+    `@${tags.username} 🍿 https://movies.elm.land`
 
   commands['!elm'] = ({ tags }) =>
-    `@${tags.username}: Elm is a friendly language that compiles to HTML/CSS/JS, learn more here: https://elm-lang.org`
+    `@${tags.username} 🌳 https://elm-lang.org`
+
+  commands['!elmland'] = ({ tags }) =>
+    `@${tags.username} 🌈 https://elm.land`
+
+  commands['!css-in-elm'] = ({ tags }) =>
+    `@${tags.username} 🎨 https://www.npmjs.com/package/@ryannhg/css-in-elm`
+
+  commands['!vitepress'] = ({ tags }) =>
+    `@${tags.username} ⚡ https://vitepress.dev`
+
+  commands['!sponsor'] = ({ tags }) =>
+    `@${tags.username} 💖 You can support Ryan's work on GitHub: https://github.com/sponsors/ryannhg`
+
+  commands['!rhg'] = ({ tags }) =>
+    `@${tags.username} 🦊 https://rhg.dev`
+
+  commands['!yt'] = ({ tags }) =>
+    `@${tags.username} 📺 https://youtube.com/@rhg_dev`
+
+  commands['!twitter'] = ({ tags }) =>
+    `@${tags.username} 🐤 https://twitter.com/rhg_dev`
+
+  commands['!github'] = ({ tags }) =>
+    `@${tags.username} 🐙 https://github.com/ryannhg`
+
+  commands['!blog'] = ({ tags }) =>
+    `@${tags.username} ✍️ https://rhg.dev/blog`
+
+  commands['!arcade'] = ({ tags }) =>
+    `@${tags.username} 🎮 https://rhg.dev/arcade`
+
+  commands['!jangle'] = ({ tags }) =>
+    `@${tags.username} 🐶 https://jangle.io`
 
   commands['!socials'] = ({ tags }) =>
-    `@${tags.username}: 🐙 https://github.com/ryannhg 🐤 https://twitter.com/rhg_dev`
-
-  commands['!uno'] = ({ tags }) =>
-    `@${tags.username}: Play our Uno game here: https://uno.rhg.dev`
-
-  commands['!shidi'] = ({ tags }) =>
-    `@${tags.username}: Create some jams here: https://shidi.netlify.app`
-
-  commands['!storybook'] = ({ tags }) =>
-    `@${tags.username}: View our Storybook here: https://evergreen-elm-storybook.netlify.app`
+    `@${tags.username} 🐙 https://github.com/ryannhg 🐤 https://twitter.com/rhg_dev 📺 https://youtube.com/@rhg_dev`
 
   commands['!theclaw'] = ({ tags }) =>
-    `@${tags.username}: Check out THE CLAW!! https://www.twitch.tv/team/theclaw`
+    `@${tags.username} 🦞 https://www.twitch.tv/team/theclaw`
 
   commands['!so'] = ({ tags, message }) => {
-    if (tags.username === streamer) {
+    if (tags.username === streamerUsername) {
       let [_, rawUsername] = message.split(' ')
       if (rawUsername) {
         let username = rawUsername.startsWith('@') ? rawUsername.slice(1) : rawUsername
 
         return `Go check out @${username} at https://twitch.tv/${username}`
       } else {
-        console.warn(`The !so command requires a twitch username.`)
+        console.warn(`The "!so" command requires a twitch username.`)
       }
     } else {
-      console.warn(`The !so command cannot be sent by ${tags.username}.`)
+      console.warn(`The "!so" command cannot be sent by ${tags.username}.`)
     }
   }
 
+  // Include a special `!help` command
+  let dontShowThese = ['!so', '!help', '!commands']
+  let notIncludedIn = (commandsToFind) => (command) =>
+    !(commandsToFind.includes(command))
+
   commands['!help'] = ({ tags }) =>
-    `@${tags.username}: here are all the chat commands: ${Object.keys(commands).filter(notIncludedIn(adminOnlyCommands)).join(', ')}`
+    `@${tags.username}: here are all the chat commands: ${Object.keys(commands).filter(notIncludedIn(dontShowThese)).join(', ')}`
 
   commands['!commands'] = commands['!help']
 
@@ -81,7 +105,8 @@ const main = async () => {
   client.on('message', (channel, tags, message, self) => {
     if (self) return // Ignore all messages from self
 
-    const matchingCommand = commands[message.toLowerCase().split(' ')[0]]
+    const lowercasedFirstWord = message.toLowerCase().split(' ')[0]
+    const matchingCommand = commands[lowercasedFirstWord]
 
     if (matchingCommand) {
       let response = matchingCommand({ tags, message })
